@@ -36,9 +36,10 @@ class _Etapes extends State<Etapes> {
       appBar: AppBarBeerMaker(),
       body: SingleChildScrollView(
         child: Center(
-          child: Padding(
-              padding: const EdgeInsets.all(20), child: afficheEtapes(index)),
-        ),
+            child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: afficheEtapes(index),
+        )),
       ),
     );
   }
@@ -51,8 +52,18 @@ class _Etapes extends State<Etapes> {
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Image.asset("assets/images/step/end.gif",
               height: 400.0, width: 400.0),
-          const Text('L\'alcool est à consommer sans modération.'),
-          const Text('Bonne dégustation !'),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('L\'alcool est à consommer sans modération.'),
+                  const Text('Bonne dégustation !'),
+                ],
+              ),
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [_montreArrowBack(), _montreArrowNext()],

@@ -9,27 +9,29 @@ class Menu extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBarBeerMaker(),
-      body: Center(
-        child: Column(
-          children: [
-            LogoAndText(text: 'BeerMaker'),
-            const Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'Choissisez une option !',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
-            ButtonMenu(
-                text: 'Etape de Fabrication',
-                action: () => Navigator.pushNamed(context, '/etapes')),
-            ButtonMenu(
-              text: 'Fabrication   ',
-              action: () => Navigator.pushNamed(context, '/fabrication'),
-            ),
-            ButtonMenu(
-                text: 'Vos recettes   ',
-                action: () => Navigator.pushNamed(context, '/etapes'))
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              LogoAndText(text: 'BeerMaker'),
+              const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Choissisez une option !',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+              ButtonMenu(
+                  text: 'Etape de Fabrication',
+                  action: () => Navigator.pushNamed(context, '/etapes')),
+              ButtonMenu(
+                text: 'Fabrication   ',
+                action: () => Navigator.pushNamed(context, '/fabrication'),
+              ),
+              ButtonMenu(
+                  text: 'Vos recettes   ',
+                  action: () => Navigator.pushNamed(context, '/recettes'))
+            ],
+          ),
         ),
       ),
     );

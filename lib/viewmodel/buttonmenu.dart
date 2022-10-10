@@ -12,16 +12,17 @@ class ButtonMenu extends StatelessWidget {
       padding: EdgeInsets.all(10),
       child: ElevatedButton(
         onPressed: action,
-        child: Text(text),
         style: ButtonStyle(
+          minimumSize: MaterialStateProperty.all(Size(4000, 30)),
           padding: MaterialStateProperty.all(EdgeInsets.only(
             top: 30,
             bottom: 30,
-            left: MediaQuery.of(context).size.height * 0.20,
-            right: MediaQuery.of(context).size.height * 0.20,
+            left: MediaQuery.of(context).size.height * 0.10,
+            right: MediaQuery.of(context).size.height * 0.10,
           )),
           backgroundColor: MaterialStatePropertyAll<Color>(Colors.green),
         ),
+        child: Text(text.toUpperCase()),
       ),
     );
   }

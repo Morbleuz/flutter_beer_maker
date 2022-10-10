@@ -10,23 +10,21 @@ class LogoAndText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Expanded(
-            flex: 1,
-            child: SizedBox(
-                width: 400,
-                child: Image.asset('assets/images/beermakerlogo1000.png')),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Text(
-                  '$text',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                )),
-          )
+          SizedBox(
+              width: MediaQuery.of(context).size.width * 0.3,
+              child: Image.asset('assets/images/beermakerlogo1000.png')),
+          Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Container(
+                child: Center(
+                  child: Text(
+                    '${text.toUpperCase()}',
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )),
         ],
       ),
       //Fin de la ligne
