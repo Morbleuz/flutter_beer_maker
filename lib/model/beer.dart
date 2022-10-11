@@ -9,6 +9,14 @@ class Beer {
   Beer(this._volumeLitre, this._degreAlcool, this._moyenneEBC);
   Beer.vide();
 
+  double getVolumeLitre() {
+    return _volumeLitre;
+  }
+
+  double getDegreAlcool() {
+    return _degreAlcool;
+  }
+
   void changeParametre(volumeLitre, degreAlcool, moyenneEBC) {
     this._volumeLitre = volumeLitre;
     this._degreAlcool = degreAlcool;
