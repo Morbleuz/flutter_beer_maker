@@ -3,7 +3,7 @@ import 'package:flutter_beer_maker/model/string.dart';
 import 'package:flutter_beer_maker/viewmodel/appbar.dart';
 
 class Etapes extends StatefulWidget {
-  Etapes({super.key});
+  const Etapes({super.key});
 
   @override
   @override

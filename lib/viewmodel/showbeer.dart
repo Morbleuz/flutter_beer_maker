@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ShowBeer extends StatelessWidget {
   final beer;
@@ -20,8 +21,45 @@ class ShowBeer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
-      child: InkWell(
+        padding: const EdgeInsets.all(20),
+        child: Slidable(
+          key: const ValueKey(0),
+          endActionPane: ActionPane(
+            motion: const ScrollMotion(),
+            children: [
+              SlidableAction(
+                icon: Icons.info,
+                label: 'Voir les informations',
+                onPressed: _showInformationBeer,
+                backgroundColor: Colors.yellow,
+                borderRadius: BorderRadius.circular(9),
+              ),
+            ],
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(9),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Text('Nom de la bière'),
+                    Text('10L'),
+                    Text('9 degrès')
+                  ]),
+            ),
+          ),
+        )
+
+        /*
+
+      Old
+
+
+      InkWell(
         onTap: () => _showInformationBeer(context),
         child: Container(
           decoration: BoxDecoration(
@@ -46,6 +84,8 @@ class ShowBeer extends StatelessWidget {
           ),
         ),
       ),
-    );
+
+      */
+        );
   }
 }

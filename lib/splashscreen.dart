@@ -6,11 +6,12 @@ import 'package:flutter_beer_maker/myhomepage.dart';
 import 'menu.dart';
 
 class SplashScreen extends State<MyHomePage> {
+
   @override
   void initState() {
     super.initState();
     Timer(
-      Duration(seconds: 3),
+      const Duration(seconds: 3),
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
