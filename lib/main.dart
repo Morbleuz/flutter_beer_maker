@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_beer_maker/etapes.dart';
 import 'package:flutter_beer_maker/menu.dart';
 import 'package:flutter_beer_maker/myhomepage.dart';
-import 'package:flutter_beer_maker/recettes.dart';
+import 'package:flutter_beer_maker/pagerecettes.dart';
 
 import 'fabrication.dart';
 

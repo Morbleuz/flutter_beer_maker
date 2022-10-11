@@ -114,7 +114,9 @@ class _Fabrication extends State<Fabrication> {
                                 MaterialStatePropertyAll<Color>(Colors.green),
                           ),
                           onPressed: () {},
-                          child: const Text('ENREGISTRER LA RECETTE'))),
+                          child: const Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Text('ENREGISTRER LA RECETTE')))),
                 ),
               ],
             ),

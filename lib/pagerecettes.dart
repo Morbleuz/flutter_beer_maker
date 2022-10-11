@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_beer_maker/model/api.dart';
 import 'package:flutter_beer_maker/model/beer.dart';
 import 'package:flutter_beer_maker/model/recipe.dart';
 import 'package:flutter_beer_maker/viewmodel/appbar.dart';
@@ -13,10 +14,7 @@ class Recette extends StatefulWidget {
 }
 
 class _Recette extends State<Recette> {
-  final List<Recipe> _lesRecettes = [
-    Recipe(Beer(1, 2, 3), 'Ma recette'),
-    Recipe(Beer(10, 19, 4), 'Ma deuxième recette')
-  ];
+  List<Recipe> _lesRecettes = [];
   List<Widget> _content = [LogoAndText(text: 'Vos recettes')];
   //Clef pour le refresh
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -28,11 +26,18 @@ class _Recette extends State<Recette> {
     });
   }
 
+  Future<void> _supprimeRecipe(Recipe recette) async {
+    await API.deleteUneRecipe(recette.id);
+    setState(() {});
+  }
+
   Future<void> _initBiere() async {
     _clearContent();
+    _lesRecettes = await API.recupData();
     for (Recipe recette in _lesRecettes) {
       //Faire la méthode pour récupérer des bières
-      _content.add(ShowBeer(recette: recette));
+      _content.add(ShowBeer(
+          recette: recette, supprimer: ((p0) => (_supprimeRecipe(recette)))));
     }
     setState(() {});
   }

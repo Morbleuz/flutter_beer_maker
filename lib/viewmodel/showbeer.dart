@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_beer_maker/model/api.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../model/recipe.dart';
 
 class ShowBeer extends StatelessWidget {
   final Recipe recette;
+  final void Function(BuildContext) supprimer;
 
-  const ShowBeer({
-    super.key,
-    required this.recette,
-  });
+  const ShowBeer({super.key, required this.recette, required this.supprimer});
+
   Future<void> _showInformationBeer(BuildContext context) {
     return showDialog(
         context: context,
@@ -111,9 +111,9 @@ class ShowBeer extends StatelessWidget {
               ),
               SlidableAction(
                 autoClose: true,
-                icon: Icons.info,
+                icon: Icons.delete,
                 label: 'Supprimer',
-                onPressed: _showInformationBeer,
+                onPressed: supprimer,
                 backgroundColor: Colors.red,
                 borderRadius: BorderRadius.circular(9),
               ),
@@ -121,31 +121,38 @@ class ShowBeer extends StatelessWidget {
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: Colors.grey,
               borderRadius: BorderRadius.circular(9),
             ),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Column(
                       children: [
-                        const Padding(
-                            padding: EdgeInsets.only(bottom: 5),
-                            child: Text('Couleur de la bière : ')),
                         Container(
-                          color: Color(recette
-                              .getBeer()
-                              .srmToRGB(recette.getBeer().calculSRM())),
                           width: MediaQuery.of(context).size.width * 0.1,
                           height: MediaQuery.of(context).size.height * 0.1,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(recette
+                                .getBeer()
+                                .srmToRGB(recette.getBeer().calculSRM())),
+                          ),
                         ),
                       ],
                     ),
-                    Text(recette.getTitre()),
-                    Text('${recette.getBeer().getVolumeLitre()} L'),
-                    Text('${recette.getBeer().getDegreAlcool()} degrès')
+                    Column(
+                      children: [
+                        Text(
+                          recette.getTitre(),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text('${recette.getBeer().getVolumeLitre()} L'),
+                        Text('${recette.getBeer().getDegreAlcool()} degrès')
+                      ],
+                    )
                   ]),
             ),
           ),
