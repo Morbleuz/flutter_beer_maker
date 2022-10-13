@@ -1,13 +1,41 @@
 import 'dart:math';
 
-class Beer {
+class Recette {
+  int _id = 0;
+  String _nom = "";
   double _volumeLitre = 0;
   //En pourcentage
   double _degreAlcool = 0;
   double _moyenneEBC = 0;
 
-  Beer(this._volumeLitre, this._degreAlcool, this._moyenneEBC);
-  Beer.vide();
+  Recette(this._volumeLitre, this._degreAlcool, this._moyenneEBC);
+  Recette.vide();
+  Recette.create(id, nom, volumeLitre, degreAlcool, moyenneEBC) {
+    this._volumeLitre = volumeLitre;
+    this._degreAlcool = degreAlcool;
+    this._moyenneEBC = moyenneEBC;
+    this._id = id;
+    this._nom = nom;
+  }
+  double getMoyenneEBC() {
+    return this._moyenneEBC;
+  }
+
+  int getId() {
+    return this._id;
+  }
+
+  void setId(int id) {
+    _id = id;
+  }
+
+  void setNom(String nom) {
+    _nom = nom;
+  }
+
+  String getNom() {
+    return _nom;
+  }
 
   double getVolumeLitre() {
     return _volumeLitre;
@@ -17,10 +45,12 @@ class Beer {
     return _degreAlcool;
   }
 
-  void changeParametre(volumeLitre, degreAlcool, moyenneEBC) {
+  void changeParametre(id, nom, volumeLitre, degreAlcool, moyenneEBC) {
     this._volumeLitre = volumeLitre;
     this._degreAlcool = degreAlcool;
     this._moyenneEBC = moyenneEBC;
+    this._id = id;
+    this._nom = nom;
   }
 
   double calculQteMaltKg() {

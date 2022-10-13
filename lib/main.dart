@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           '/fabrication': (BuildContext context) => const Fabrication(),
           '/menu': (BuildContext context) => Menu(),
           '/etapes': (BuildContext context) => Etapes(),
-          '/recettes': (BuildContext context) => const Recette()
+          '/recettes': (BuildContext context) => const PageRecette()
         });
   }
 }

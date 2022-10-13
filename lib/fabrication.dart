@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_beer_maker/model/api.dart';
 import 'package:flutter_beer_maker/viewmodel/logoandtext.dart';
-import 'package:flutter_beer_maker/model/beer.dart';
+import 'package:flutter_beer_maker/model/recette.dart';
 
 class Fabrication extends StatefulWidget {
   const Fabrication({super.key});
@@ -11,12 +12,15 @@ class Fabrication extends StatefulWidget {
 
 class _Fabrication extends State<Fabrication> {
   final _formKey = GlobalKey<FormState>();
+  final _formNewRecipeKey = GlobalKey<FormState>();
+
   double _volumeBiere = 0;
   double _moyenneEBC = 0;
   double _degreAlcool = 0;
+  String _nomRecette = "";
   bool isValid = false;
-  Beer beer = Beer.vide();
-
+  Recette _recette = Recette.vide();
+  bool isEnvoyer = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +47,58 @@ class _Fabrication extends State<Fabrication> {
     );
   }
 
+  void _envoieDeLaRecette(context) async {
+    if (_formNewRecipeKey.currentState!.validate()) {
+      _recette.setNom(_nomRecette);
+      await API.createRecette(_recette);
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Recette '$_nomRecette' correctement envoyer 🚀!"),
+      ));
+    }
+    setState(() {});
+  }
+
+  Future<void> _showFormulaireEnvoieNewRecipe(
+      BuildContext context, Recette recette) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('Ajoutez une nouvelle recette'),
+              content: Form(
+                key: _formNewRecipeKey,
+                child: (Container(
+                    height: 130,
+                    child: Column(children: [
+                      TextFormField(
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.keyboard),
+                            labelText: 'Nom de la recette'),
+                        validator: (valeur) {
+                          if (valeur == null || valeur.isEmpty) {
+                            return 'Veuillez saisir une valeur.';
+                          } else {
+                            try {
+                              _nomRecette = valeur;
+                            } catch (e) {
+                              return 'Erreur';
+                            }
+                          }
+                          return null;
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                        child: ElevatedButton(
+                          onPressed: () => _envoieDeLaRecette(context),
+                          child: Icon(Icons.send),
+                        ),
+                      )
+                    ]))),
+              ),
+            ));
+  }
+
   Widget afficheInfo() => Padding(
         padding: const EdgeInsets.all(10),
         child: Container(
@@ -62,18 +118,18 @@ class _Fabrication extends State<Fabrication> {
                   ),
                 ),
                 Text(
-                  'Quantité de malt : ${beer.calculQteMaltKg()} Kg',
+                  'Quantité de malt : ${_recette.calculQteMaltKg()} Kg',
                   textAlign: TextAlign.left,
                 ),
                 Text(
-                    'Volume eau de brassage : ${beer.calculQteEauBrassageL()} L '),
+                    'Volume eau de brassage : ${_recette.calculQteEauBrassageL()} L '),
                 Text(
-                    'Volume eau de rinçage : ${beer.calculQteEauRincageL()} L'),
+                    'Volume eau de rinçage : ${_recette.calculQteEauRincageL()} L'),
                 Text(
-                    'Quantité de houblon amérisant : ${beer.calculQteHoublonAmerisantG()} G'),
+                    'Quantité de houblon amérisant : ${_recette.calculQteHoublonAmerisantG()} G'),
                 Text(
-                    'Quantité de houblon aromatique: ${beer.calculQteHoublonAromatiqueG()} G'),
-                Text('Quantité de levure : ${beer.calculQteLevureG()} G'),
+                    'Quantité de houblon aromatique: ${_recette.calculQteHoublonAromatiqueG()} G'),
+                Text('Quantité de levure : ${_recette.calculQteLevureG()} G'),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -87,9 +143,9 @@ class _Fabrication extends State<Fabrication> {
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
-                            Text('MCU = ${beer.calculMCU()}'),
-                            Text('EBC = ${beer.calculEBC()}'),
-                            Text('SRM = ${beer.calculSRM()}'),
+                            Text('MCU = ${_recette.calculMCU()}'),
+                            Text('EBC = ${_recette.calculEBC()}'),
+                            Text('SRM = ${_recette.calculSRM()}'),
                           ],
                         ),
                       ),
@@ -98,10 +154,10 @@ class _Fabrication extends State<Fabrication> {
                         child: Container(
                           width: 150,
                           height: 70,
-                          color: Color(beer.srmToRGB(beer.calculSRM())),
+                          color: Color(_recette.srmToRGB(_recette.calculSRM())),
                           child: Center(
                               child: Text(
-                                  '#${beer.srmToRGB(beer.calculSRM()).toRadixString(16).substring(2)}')),
+                                  '#${_recette.srmToRGB(_recette.calculSRM()).toRadixString(16).substring(2)}')),
                         ),
                       )
                     ]),
@@ -113,7 +169,8 @@ class _Fabrication extends State<Fabrication> {
                             backgroundColor:
                                 MaterialStatePropertyAll<Color>(Colors.green),
                           ),
-                          onPressed: () {},
+                          onPressed: () =>
+                              _showFormulaireEnvoieNewRecipe(context, _recette),
                           child: const Padding(
                               padding: EdgeInsets.all(10),
                               child: Text('ENREGISTRER LA RECETTE')))),
@@ -132,7 +189,8 @@ class _Fabrication extends State<Fabrication> {
             //Si le formulaire est valide
             if (_formKey.currentState!.validate()) {
               isValid = true;
-              beer.changeParametre(_volumeBiere, _degreAlcool, _moyenneEBC);
+              _recette.changeParametre(
+                  0, "", _volumeBiere, _degreAlcool, _moyenneEBC);
             } else {
               isValid = false;
             }

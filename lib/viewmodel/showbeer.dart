@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_beer_maker/model/api.dart';
+import 'package:flutter_beer_maker/model/recette.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../model/recipe.dart';
-
 class ShowBeer extends StatelessWidget {
-  final Recipe recette;
-  final void Function(BuildContext) supprimer;
+  final Recette recette;
+  final int id;
+  const ShowBeer({super.key, required this.recette, required this.id});
 
-  const ShowBeer({super.key, required this.recette, required this.supprimer});
+  Future<void> _supprimeRecipe(Recette recette) async {
+    print('azd');
+    await API.deleteUneRecipe(recette);
+  }
 
   Future<void> _showInformationBeer(BuildContext context) {
     return showDialog(
@@ -33,19 +36,19 @@ class ShowBeer extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Quantité de malt : ${recette.getBeer().calculQteMaltKg()} Kg',
+                        'Quantité de malt : ${recette.calculQteMaltKg()} Kg',
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                          'Volume eau de brassage : ${recette.getBeer().calculQteEauBrassageL()} L '),
+                          'Volume eau de brassage : ${recette.calculQteEauBrassageL()} L '),
                       Text(
-                          'Volume eau de rinçage : ${recette.getBeer().calculQteEauRincageL()} L'),
+                          'Volume eau de rinçage : ${recette.calculQteEauRincageL()} L'),
                       Text(
-                          'Quantité de houblon amérisant : ${recette.getBeer().calculQteHoublonAmerisantG()} G'),
+                          'Quantité de houblon amérisant : ${recette.calculQteHoublonAmerisantG()} G'),
                       Text(
-                          'Quantité de houblon aromatique: ${recette.getBeer().calculQteHoublonAromatiqueG()} G'),
+                          'Quantité de houblon aromatique: ${recette.calculQteHoublonAromatiqueG()} G'),
                       Text(
-                          'Quantité de levure : ${recette.getBeer().calculQteLevureG()} G'),
+                          'Quantité de levure : ${recette.calculQteLevureG()} G'),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -61,12 +64,9 @@ class ShowBeer extends StatelessWidget {
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Text(
-                                      'MCU = ${recette.getBeer().calculMCU()}'),
-                                  Text(
-                                      'EBC = ${recette.getBeer().calculEBC()}'),
-                                  Text(
-                                      'SRM = ${recette.getBeer().calculSRM()}'),
+                                  Text('MCU = ${recette.calculMCU()}'),
+                                  Text('EBC = ${recette.calculEBC()}'),
+                                  Text('SRM = ${recette.calculSRM()}'),
                                 ],
                               ),
                             ),
@@ -75,12 +75,11 @@ class ShowBeer extends StatelessWidget {
                               child: Container(
                                 width: 150,
                                 height: 70,
-                                color: Color(recette
-                                    .getBeer()
-                                    .srmToRGB(recette.getBeer().calculSRM())),
+                                color: Color(
+                                    recette.srmToRGB(recette.calculSRM())),
                                 child: Center(
                                     child: Text(
-                                        '#${recette.getBeer().srmToRGB(recette.getBeer().calculSRM()).toRadixString(16).substring(2)}')),
+                                        '#${recette.srmToRGB(recette.calculSRM()).toRadixString(16).substring(2)}')),
                               ),
                             )
                           ]),
@@ -113,7 +112,7 @@ class ShowBeer extends StatelessWidget {
                 autoClose: true,
                 icon: Icons.delete,
                 label: 'Supprimer',
-                onPressed: supprimer,
+                onPressed: ((context) => _supprimeRecipe(recette)),
                 backgroundColor: Colors.red,
                 borderRadius: BorderRadius.circular(9),
               ),
@@ -136,9 +135,7 @@ class ShowBeer extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.1,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(recette
-                                .getBeer()
-                                .srmToRGB(recette.getBeer().calculSRM())),
+                            color: Color(recette.srmToRGB(recette.calculSRM())),
                           ),
                         ),
                       ],
@@ -146,11 +143,11 @@ class ShowBeer extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          recette.getTitre(),
+                          recette.getNom(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text('${recette.getBeer().getVolumeLitre()} L'),
-                        Text('${recette.getBeer().getDegreAlcool()} degrès')
+                        Text('${recette.getVolumeLitre()} L'),
+                        Text('${recette.getDegreAlcool()} degrès')
                       ],
                     )
                   ]),

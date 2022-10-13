@@ -1,35 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_beer_maker/model/recipe.dart';
 import 'package:flutter_beer_maker/pagerecettes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-import 'beer.dart';
+import 'recette.dart';
 
 abstract class API {
-  static Future<List<Recipe>> recupData() async {
-    List<Recipe> lesNouvellesRecettes = [];
+  static Future<List<Recette>> recupData() async {
+    List<Recette> lesNouvellesRecettes = [];
+
     http.Response reponse = await http.get(Uri.parse(
-        'https://s3-4440.nuage-peda.fr/apiBeerMaker/public/api/recipes?page=1'));
+        'https://s3-4440.nuage-peda.fr/apiBeerMaker/public/api/recettes'));
     Map<String, dynamic> data = {};
     if (reponse.statusCode == 200) {
       data = convert.jsonDecode(reponse.body);
-      List<dynamic> test = data["hydra:member"];
-      for (Map recette in test) {
+      List<dynamic> newData = data["hydra:member"];
+
+      for (Map recette in newData) {
         //On récupérer l'url d'une bière
-        String url = recette["beer"];
-        Beer beer = await recupUneBeer(url);
         print(recette);
-        lesNouvellesRecettes.add(Recipe(beer, recette["titre"], recette["id"]));
+        lesNouvellesRecettes.add(Recette.create(
+            recette["id"],
+            recette["nom"],
+            recette["volumeLitre"],
+            recette["degreAlcool"],
+            recette["moyenneEBC"]));
       }
     }
     return lesNouvellesRecettes;
   }
 
-  static Future<void> deleteUneRecipe(Recipe recipe) async {
+  static Future<http.Response> createRecette(Recette recette) {
+    print(recette.getNom());
+    return http.post(
+      Uri.parse(
+          'https://s3-4440.nuage-peda.fr/apiBeerMaker/public/api/recettes'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: convert.jsonEncode(<String, dynamic>{
+        'nom': recette.getNom(),
+        'volumeLitre': recette.getVolumeLitre(),
+        'moyenneEBC': recette.getMoyenneEBC(),
+        'degreAlcool': recette.getDegreAlcool()
+      }),
+    );
+  }
+
+  static Future<void> deleteUneRecipe(Recette recette) async {
     http.Response response = await http.delete(
       Uri.parse(
-          'https://s3-4440.nuage-peda.fr/apiBeerMaker/public/api/recipes/${recipe.id}'),
+          'https://s3-4440.nuage-peda.fr/apiBeerMaker/public/api/recettes/${recette.getId()}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -37,6 +58,7 @@ abstract class API {
     print(response.statusCode);
   }
 
+  /*
   static Future<Beer> recupUneBeer(String url) async {
     http.Response reponse =
         await http.get(Uri.parse('https://s3-4440.nuage-peda.fr$url'));
@@ -49,4 +71,5 @@ abstract class API {
     }
     return beer;
   }
+  */
 }
