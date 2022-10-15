@@ -62,41 +62,41 @@ class _Fabrication extends State<Fabrication> {
   Future<void> _showFormulaireEnvoieNewRecipe(
       BuildContext context, Recette recette) {
     return showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text('Ajoutez une nouvelle recette'),
-              content: Form(
-                key: _formNewRecipeKey,
-                child: (Container(
-                    height: 130,
-                    child: Column(children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                            icon: Icon(Icons.keyboard),
-                            labelText: 'Nom de la recette'),
-                        validator: (valeur) {
-                          if (valeur == null || valeur.isEmpty) {
-                            return 'Veuillez saisir une valeur.';
-                          } else {
-                            try {
-                              _nomRecette = valeur;
-                            } catch (e) {
-                              return 'Erreur';
-                            }
-                          }
-                          return null;
-                        },
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(20),
-                        child: ElevatedButton(
-                          onPressed: () => _envoieDeLaRecette(context),
-                          child: Icon(Icons.send),
-                        ),
-                      )
-                    ]))),
-              ),
-            ));
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Ajoutez une nouvelle recette'),
+        content: Form(
+            key: _formNewRecipeKey,
+            child: Container(
+                height: 130,
+                child: Column(children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        icon: Icon(Icons.keyboard),
+                        labelText: 'Nom de la recette'),
+                    validator: (valeur) {
+                      if (valeur == null || valeur.isEmpty) {
+                        return 'Veuillez saisir une valeur.';
+                      } else {
+                        try {
+                          _nomRecette = valeur;
+                        } catch (e) {
+                          return 'Erreur';
+                        }
+                      }
+                      return null;
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: ElevatedButton(
+                      onPressed: () => _envoieDeLaRecette(context),
+                      child: Icon(Icons.send),
+                    ),
+                  )
+                ]))),
+      ),
+    );
   }
 
   Widget afficheInfo() => Padding(

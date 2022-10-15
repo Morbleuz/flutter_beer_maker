@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_beer_maker/pagerecettes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
@@ -19,12 +17,14 @@ abstract class API {
       for (Map recette in newData) {
         //On récupérer l'url d'une bière
         print(recette);
+        print(recette["volumeLitre"].toDouble());
+
         lesNouvellesRecettes.add(Recette.create(
             recette["id"],
             recette["nom"],
-            recette["volumeLitre"],
-            recette["degreAlcool"],
-            recette["moyenneEBC"]));
+            recette["volumeLitre"].toDouble(),
+            recette["degreAlcool"].toDouble(),
+            recette["moyenneEBC"].toDouble()));
       }
     }
     return lesNouvellesRecettes;

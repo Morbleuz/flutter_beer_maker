@@ -10,19 +10,20 @@ class Recette {
 
   Recette(this._volumeLitre, this._degreAlcool, this._moyenneEBC);
   Recette.vide();
-  Recette.create(id, nom, volumeLitre, degreAlcool, moyenneEBC) {
-    this._volumeLitre = volumeLitre;
-    this._degreAlcool = degreAlcool;
-    this._moyenneEBC = moyenneEBC;
-    this._id = id;
-    this._nom = nom;
+  Recette.create(int id, String nom, double volumeLitre, double degreAlcool,
+      double moyenneEBC) {
+    _volumeLitre = volumeLitre;
+    _degreAlcool = degreAlcool;
+    _moyenneEBC = moyenneEBC;
+    _id = id;
+    _nom = nom;
   }
   double getMoyenneEBC() {
-    return this._moyenneEBC;
+    return _moyenneEBC;
   }
 
   int getId() {
-    return this._id;
+    return _id;
   }
 
   void setId(int id) {
@@ -46,16 +47,16 @@ class Recette {
   }
 
   void changeParametre(id, nom, volumeLitre, degreAlcool, moyenneEBC) {
-    this._volumeLitre = volumeLitre;
-    this._degreAlcool = degreAlcool;
-    this._moyenneEBC = moyenneEBC;
-    this._id = id;
-    this._nom = nom;
+    _volumeLitre = volumeLitre;
+    _degreAlcool = degreAlcool;
+    _moyenneEBC = moyenneEBC;
+    _id = id;
+    _nom = nom;
   }
 
   double calculQteMaltKg() {
     double malt = 0;
-    malt = (this._volumeLitre * this._degreAlcool) / 20;
+    malt = (_volumeLitre * _degreAlcool) / 20;
     return malt;
   }
 
@@ -65,15 +66,14 @@ class Recette {
 
   double calculQteEauRincageL() {
     double eauRincage = 0;
-    eauRincage = (this._volumeLitre * 1.25) - (calculQteEauBrassageL() * 0.7);
+    eauRincage = (_volumeLitre * 1.25) - (calculQteEauBrassageL() * 0.7);
     return double.parse(eauRincage.toStringAsFixed(3));
   }
 
   double calculMCU() {
     double mcu = 0;
-    mcu = double.parse(
-        (4.23 * (this._moyenneEBC * calculQteMaltKg()) / this._volumeLitre)
-            .toStringAsFixed(3));
+    mcu = double.parse((4.23 * (_moyenneEBC * calculQteMaltKg()) / _volumeLitre)
+        .toStringAsFixed(3));
     return mcu;
   }
 
@@ -97,15 +97,15 @@ class Recette {
   }
 
   double calculQteHoublonAmerisantG() {
-    return this._volumeLitre * 3;
+    return _volumeLitre * 3;
   }
 
   double calculQteHoublonAromatiqueG() {
-    return this._volumeLitre * 1;
+    return _volumeLitre * 1;
   }
 
   double calculQteLevureG() {
-    return (this._volumeLitre / 2);
+    return (_volumeLitre / 2);
   }
 
   List<double> ensembleCalcul() {
