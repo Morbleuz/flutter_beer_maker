@@ -19,7 +19,7 @@ class _Fabrication extends State<Fabrication> {
   double _degreAlcool = 0;
   String _nomRecette = "";
   bool isValid = false;
-  Recette _recette = Recette.vide();
+  final _recette = Recette.vide();
   bool isEnvoyer = false;
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class _Fabrication extends State<Fabrication> {
         title: const Text('Ajoutez une nouvelle recette'),
         content: Form(
             key: _formNewRecipeKey,
-            child: Container(
+            child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.25,
                 child: Column(children: [
                   TextFormField(
@@ -88,13 +88,13 @@ class _Fabrication extends State<Fabrication> {
                     },
                   ),
                   Padding(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: ElevatedButton(
-                      style: ButtonStyle(
+                      style: const ButtonStyle(
                           backgroundColor:
                               MaterialStatePropertyAll<Color>(Colors.green)),
                       onPressed: () => _envoieDeLaRecette(context),
-                      child: Icon(Icons.send),
+                      child: const Icon(Icons.send),
                     ),
                   )
                 ]))),
@@ -105,7 +105,7 @@ class _Fabrication extends State<Fabrication> {
   Widget afficheInfo() => Padding(
         padding: const EdgeInsets.all(10),
         child: Container(
-          color: Color.fromARGB(90, 216, 216, 216),
+          color: const Color.fromARGB(90, 216, 216, 216),
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.all(10),

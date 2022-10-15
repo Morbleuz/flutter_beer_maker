@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_beer_maker/model/api.dart';
 import 'package:flutter_beer_maker/myhomepage.dart';
+import 'package:flutter_beer_maker/noconnected.dart';
 
 import 'menu.dart';
 
 class SplashScreen extends State<MyHomePage> {
-
   @override
   void initState() {
     super.initState();

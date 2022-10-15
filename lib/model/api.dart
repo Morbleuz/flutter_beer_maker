@@ -4,6 +4,16 @@ import 'dart:convert' as convert;
 import 'recette.dart';
 
 abstract class API {
+  static Future<bool> testCommunication() async {
+    bool connected = true;
+    http.Response reponse = await http.get(Uri.parse(
+        'https://s3-4440.nuage-peda.fr/apiBeerMaker/public/api/recettes'));
+    if (reponse.statusCode != 200) {
+      connected = false;
+    }
+    return connected;
+  }
+
   static Future<List<Recette>> recupData() async {
     List<Recette> lesNouvellesRecettes = [];
 

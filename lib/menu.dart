@@ -3,11 +3,26 @@ import 'package:flutter_beer_maker/viewmodel/appbar.dart';
 import 'package:flutter_beer_maker/viewmodel/buttonmenu.dart';
 import 'package:flutter_beer_maker/viewmodel/logoandtext.dart';
 
-class Menu extends StatelessWidget {
+import 'model/api.dart';
+import 'noconnected.dart';
+
+class Menu extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
+  State<Menu> createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
+  Widget body = Center(
+    child: Column(mainAxisAlignment: MainAxisAlignment.center, children: const [
+      Text('Chargement de l\'api'),
+      CircularProgressIndicator(
+        color: Colors.black,
+      )
+    ]),
+  );
+
+  void menuSiApiOK() {
+    body = Scaffold(
       appBar: AppBarBeerMaker(),
       body: SingleChildScrollView(
         child: Center(
@@ -35,5 +50,30 @@ class Menu extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> testConnexionApi() async {
+    if (await API.testCommunication()) {
+      Future.delayed(Duration(seconds: 10));
+      menuSiApiOK();
+    } else {
+      Future.delayed(Duration(seconds: 10));
+
+      body = NoConnected();
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // TODO: implement initState
+    testConnexionApi();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return body;
   }
 }

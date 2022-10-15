@@ -53,15 +53,13 @@ class _Etapes extends State<Etapes> {
           Image.asset("assets/images/step/end.gif",
               height: 400.0, width: 400.0),
           Padding(
-            padding: EdgeInsets.all(10),
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('L\'alcool est à consommer sans modération.'),
-                  const Text('Bonne dégustation !'),
-                ],
-              ),
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text('L\'alcool est à consommer sans modération.'),
+                Text('Bonne dégustation !'),
+              ],
             ),
           ),
           Row(
@@ -74,17 +72,17 @@ class _Etapes extends State<Etapes> {
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(
             '${lesPages[index]['texte'][0]}',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Text('${lesPages[index]['texte'][1]}'),
           ),
           const Text(
             'Images annexes',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          _AjoutePhotosAUneListe(index, context),
+          _ajoutePhotosAUneListe(index, context),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [_montreArrowBack(), _montreArrowNext()],
@@ -98,18 +96,17 @@ class _Etapes extends State<Etapes> {
 
   //Deux fonctions pour ajouter dynamiquements à une colonnes
   // des images
-  Widget _CreateImageAsset(String uri, context) {
+  Widget _createImageAsset(String uri, context) {
     return SizedBox(
         width: 300, height: 300, child: Image.asset('assets/images/step/$uri'));
   }
 
-  Widget _AjoutePhotosAUneListe(int index, context) {
+  Widget _ajoutePhotosAUneListe(int index, context) {
     Widget container = Container();
-    Widget column = Column();
     List<Widget> image = [];
     if (lesPages[index]['images'].isNotEmpty) {
       for (String uri in lesPages[index]['images']) {
-        image.add(_CreateImageAsset(uri, context));
+        image.add(_createImageAsset(uri, context));
       }
       container = Column(
         children: image,
