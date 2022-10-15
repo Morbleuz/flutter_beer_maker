@@ -64,11 +64,11 @@ class _Fabrication extends State<Fabrication> {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Ajoutez une nouvelle recette'),
+        title: const Text('Ajoutez une nouvelle recette'),
         content: Form(
             key: _formNewRecipeKey,
             child: Container(
-                height: 130,
+                height: MediaQuery.of(context).size.height * 0.25,
                 child: Column(children: [
                   TextFormField(
                     decoration: const InputDecoration(
@@ -90,6 +90,9 @@ class _Fabrication extends State<Fabrication> {
                   Padding(
                     padding: EdgeInsets.all(20),
                     child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll<Color>(Colors.green)),
                       onPressed: () => _envoieDeLaRecette(context),
                       child: Icon(Icons.send),
                     ),

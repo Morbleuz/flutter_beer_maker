@@ -30,11 +30,10 @@ class _PageRecette extends State<PageRecette> {
     await API.deleteUneRecipe(recette);
     _initBiere();
   }
-  /*
 
-  BLOC A REVOIR POUR LA SUPPRESION D'UNE RECETTE
-
-  */
+  initState() {
+    _initBiere();
+  }
 
   Future<void> _initBiere() async {
     _clearContent();
@@ -58,6 +57,7 @@ class _PageRecette extends State<PageRecette> {
           return AlertDialog(
               title: const Text('Information sur la bière'),
               content: Container(
+                height: MediaQuery.of(context).size.height * 0.6,
                 color: Color.fromARGB(90, 216, 216, 216),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
@@ -111,8 +111,9 @@ class _PageRecette extends State<PageRecette> {
                             Padding(
                               padding: EdgeInsets.all(10),
                               child: Container(
-                                width: 150,
-                                height: 70,
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.10,
                                 color: Color(
                                     recette.srmToRGB(recette.calculSRM())),
                                 child: Center(
