@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Beer Maker',
-        home: MyHomePage(),
+        home: const MyHomePage(),
         routes: <String, WidgetBuilder>{
           '/fabrication': (BuildContext context) => const Fabrication(),
           '/menu': (BuildContext context) => Menu(),
