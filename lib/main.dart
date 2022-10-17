@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           '/fabrication': (BuildContext context) => const Fabrication(),
           '/menu': (BuildContext context) => Menu(),
-          '/etapes': (BuildContext context) => Etapes(),
+          '/etapes': (BuildContext context) => const Etapes(),
           '/recettes': (BuildContext context) => const PageRecette()
         });
   }

@@ -38,6 +38,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_slidable: ^2.0.0
   http: ^0.13.5
+  flutter_launcher_icons: "^0.10.0"
+
+flutter_icons:
+  #  image_path: "assets/images/icon-128x128.png"
+  image_path: "assets/logo/logo.png"
+  android: true # can specify file name here e.g. "ic_launcher"
+  ios: true # can specify file name here e.g. "My-Launcher-Icon"
+  macos: true
 
 dev_dependencies:
   flutter_test:

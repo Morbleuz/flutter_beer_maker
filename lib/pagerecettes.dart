@@ -31,7 +31,9 @@ class _PageRecette extends State<PageRecette> {
     _initBiere();
   }
 
+  @override
   initState() {
+    super.initState();
     _initBiere();
   }
 

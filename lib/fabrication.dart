@@ -13,7 +13,7 @@ class Fabrication extends StatefulWidget {
 class _Fabrication extends State<Fabrication> {
   final _formKey = GlobalKey<FormState>();
   final _formNewRecipeKey = GlobalKey<FormState>();
-
+  bool _isPush = false;
   double _volumeBiere = 0;
   double _moyenneEBC = 0;
   double _degreAlcool = 0;
@@ -49,18 +49,23 @@ class _Fabrication extends State<Fabrication> {
 
   void _envoieDeLaRecette(context) async {
     if (_formNewRecipeKey.currentState!.validate()) {
-      String message = "";
-      _recette.setNom(_nomRecette);
-      if (await API.testCommunication()) {
-        await API.createRecette(_recette);
-        message = "Recette '$_nomRecette' correctement envoyer 🚀!";
-      } else {
-        message = "Impossible d'envoyer la recette.";
+      //Evite le problème de multiple
+      //Navigator.of(context).pop()
+      if (!_isPush) {
+        _isPush = true;
+        String message = "";
+        _recette.setNom(_nomRecette);
+        if (await API.testCommunication()) {
+          await API.createRecette(_recette);
+          message = "Recette '$_nomRecette' correctement envoyer 🚀!";
+        } else {
+          message = "Impossible d'envoyer la recette.";
+        }
+        Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(message),
+        ));
       }
-      Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(message),
-      ));
     }
     setState(() {});
   }
