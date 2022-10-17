@@ -44,19 +44,43 @@ class _MenuState extends State<Menu> {
   void menuSiApiNotOK() {
     body = Scaffold(
       appBar: AppBarBeerMaker(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8),
-              child:
-                  Text('Impossible d\'établir une communication avec l\'api'),
-            ),
-            ElevatedButton(
-                onPressed: () => testConnexionApi(),
-                child: Text('Reesayer la connexion'))
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              LogoAndText(text: 'BeerMaker'),
+              const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Choissisez une option !',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+              ButtonMenu(
+                  text: 'Etape de Fabrication',
+                  action: () => Navigator.pushNamed(context, '/etapes')),
+              ButtonMenu(
+                text: 'Fabrication   ',
+                action: () => Navigator.pushNamed(context, '/fabrication'),
+              ),
+              const ButtonMenu(
+                  text: 'Vos recettes (Indisponible sans l\'API)   ',
+                  action: null)
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(30),
+        child: FloatingActionButton(
+          tooltip: 'Refresh test connexion API',
+          backgroundColor: const Color.fromARGB(255, 60, 141, 63),
+          hoverColor: const Color.fromARGB(255, 42, 97, 43),
+          onPressed: testConnexionApi,
+          child: const Icon(
+            Icons.refresh,
+            color: Colors.white,
+            size: 30,
+          ),
         ),
       ),
     );

@@ -49,11 +49,17 @@ class _Fabrication extends State<Fabrication> {
 
   void _envoieDeLaRecette(context) async {
     if (_formNewRecipeKey.currentState!.validate()) {
+      String message = "";
       _recette.setNom(_nomRecette);
-      await API.createRecette(_recette);
+      if (await API.testCommunication()) {
+        await API.createRecette(_recette);
+        message = "Recette '$_nomRecette' correctement envoyer 🚀!";
+      } else {
+        message = "Impossible d'envoyer la recette.";
+      }
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Recette '$_nomRecette' correctement envoyer 🚀!"),
+        content: Text(message),
       ));
     }
     setState(() {});
